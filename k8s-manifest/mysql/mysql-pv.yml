@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+  labels:
+    type: local
+    app: mysql
+    tier: database
+    env: dev
+spec:
+  accessModes:
+      - ReadWriteOnce                  # Monté en lecture/écriture par un seul nœud
+  storageClassName: manual           # Doit correspondre à celui du PVC
+  capacity:
+    storage: 10Gi                    # Taille du volume (ici 10 Go)
+  volumeMode: Filesystem             # Mode de stockage (Filesystem ou Block)
+  persistentVolumeReclaimPolicy: Retain  # Que faire après suppression du PVC (Retain/Delete/Retain)
+  hostPath:                          # Exemple local (pour test)
+    path: /data-mysql            # Chemin sur le nœud
